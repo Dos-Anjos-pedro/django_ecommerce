@@ -4,7 +4,7 @@ from products.models import Product
 from .models import Cart
 
 def cart_home(request):
-    cart_obj, new_obj = Cart.objects.new_or_get(request)
+    cart_obj, new_obj  = Cart.objects.new_or_get(request)
     return render(request, "carts/home.html", {"cart": cart_obj})
 
 def cart_update(request):
@@ -21,4 +21,5 @@ def cart_update(request):
             cart_obj.products.remove(product_obj) 
         else: 
             cart_obj.products.add(product_obj)
+        request.session['cart_items'] = cart_obj.products.count()
     return redirect("cart:home")
